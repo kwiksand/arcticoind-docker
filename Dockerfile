@@ -28,7 +28,7 @@ COPY docker-entrypoint.sh /entrypoint.sh
 RUN chmod 777 /entrypoint.sh && \
      cp /home/arcticcoin/arcticcoind/src/arcticcoin-cli /usr/bin/arcticcoin-cli && chmod 755 /usr/bin/arcticcoin-cli && \
      cp /home/arcticcoin/arcticcoind/src/arcticcoin-tx /usr/bin/arcticcoin-tx && chmod 755 /usr/bin/arcticcoin-tx && \
-     cp /home/arcticcoin/arcticcoind/src/arcticcoind /usr/bin/arcticcoind && chmod 755 /usr/bin/arcticcoind && \
+     cp /home/arcticcoin/arcticcoind/src/arcticcoind /usr/bin/arcticcoind && chmod 755 /usr/bin/arcticcoind
 
 ENTRYPOINT ["/entrypoint.sh"]
 
