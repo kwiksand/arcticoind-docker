@@ -1,0 +1,9 @@
+---
+daemon:
+#  build: .
+  image: quay.io/kwiksand/arcticcoind:latest
+  ports:
+   - "7208:7208"
+   - "7209:7209"
+  volumes:
+   - /media/crypto/arcticcoin:/home/arcticcoin/.arcticcoin
