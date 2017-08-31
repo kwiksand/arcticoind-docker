@@ -33,5 +33,3 @@ RUN chmod 777 /entrypoint.sh && \
 ENTRYPOINT ["/entrypoint.sh"]
 
 CMD ["arcticcoind"]
-
-USER arcticcoin
