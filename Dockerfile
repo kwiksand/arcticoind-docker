@@ -11,7 +11,7 @@ RUN cd /home/arcticcoin && \
     chmod 700 .ssh && \
     ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts && \
     ssh-keyscan -t rsa bitbucket.org >> ~/.ssh/known_hosts && \
-    git clone https://github.com/arcticcoin-group/arcticcoin.git arcticcoind && \
+    git clone https://github.com/ArcticCore/arcticcoin.git arcticcoind && \
     cd /home/arcticcoin/arcticcoind && \
     ./autogen.sh && \
     ./configure LDFLAGS="-L/home/arcticcoin/db4/lib/" CPPFLAGS="-I/home/arcticcoin/db4/include/" && \
