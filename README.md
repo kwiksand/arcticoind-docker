@@ -5,7 +5,7 @@ This container uses the cryptocoin-base container (https://quay.io/repository/kw
 
 ## Usage
 
-This repository contains the docker build if you'd like to manually build, but also points back at the quay.io docker build image (i.e `docker pull quay.io/kwiksand/eternityd:latest`).
+This repository contains the docker build if you'd like to manually build, but also points back at the quay.io docker build image (i.e `docker pull quay.io/kwiksand/arcticcoind:latest`).
 
 To setup in the simplest way:
 * Install docker-ce (any recent docker version) on your machine/VPS/Raspberry Pi
@@ -138,3 +138,9 @@ goldminenodeaddr=178.223.42.211:7209
 * Wait for payment :) (Check `# arcticcoin-cli -conf=/home/arcticcoin/.arcticcoin/arcticcoin.conf listtransactions` after a few days)
 
 ## TODO: Troubleshooting guide
+
+# References:
+
+There's loads of guides available online, and most are very similar, here's a few:
+* https://steemit.com/arcticcoin/@grandola/how-to-setup-coldwallet-masternodes-with-arcticcoin-mac-linux-version
+* https://steemit.com/arcticcoin/@bapparabi/arcticcoin-master-node-setup-earn-passive-income
