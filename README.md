@@ -80,14 +80,14 @@ AQ****************************HWZB
 {
   "be***************************************************44": "0"
 }
-
+```
 ### Save Node Information
 
 Now we have all the information needed to start the masternode (or Gold Mine Node as it's called in the ARC world).
 
 Most other guides recommend saving all information a file at this point to make sure it's all locked in and saved, so save the keys/ID's we've used above in a file:
 
-``bash
+```bash
 Cold Wallet
 -----------
 
