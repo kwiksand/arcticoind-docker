@@ -27,6 +27,67 @@ To setup in the simplest way:
 
 By this stage you have a working arcticcoin wallet/blockchain setup, now we need to enable the masternode itself.  
 
+# Accessing the Docker Container
+
+The guide below requires commands to be run inside the container.  Any command that references arcticcoin-cli is to be run within the container.
+
+To access the container, we use the docker-compose tool:
+
+## Start the container:
+```bash
+# cd arcticcoind-docker
+# docker-compose up -d
+```
+
+## Stop the container:
+```bash
+# cd arcticcoind-docker
+# docker-compose down
+```
+
+## Access the container:
+```bash
+# cd arcticcoind-docker
+# docker-compose exec daemon bash
+root@47e8af5ec34d:/#
+```
+
+
+## Check logs of running arcticcoin daemon (via container)
+```bash
+# cd arcticcoind-docker
+# docker-compose exec daemon bash
+# tail -f root@47e8af5ec34d:/# tail -f /home/arcticcoin/.arcticcoin/debug.log
+2017-09-09 16:04:29 disconnecting peer=97838
+2017-09-09 16:04:29 ThreadSocketHandler -- removing node: peer=97838 addr=195.181.240.207:46948 nRefCount=1 fNetworkNode=0 fInbound=1 fGoldminenode=0
+2017-09-09 16:04:31 CGoldminenodeMan::CheckAndRemove
+2017-09-09 16:04:31 CGoldminenodeMan::CheckAndRemove -- Goldminenodes: 2111, peers who asked us for Goldminenode list: 1, peers we asked for Goldminenode list: 0, entries in Goldminenode list we asked for: 0, goldminenode index size: 2247, nDsqCount: 12232
+2017-09-09 16:04:31 CGoldminenodePayments::CheckAndRemove -- Votes: 53382, Blocks: 5011
+2017-09-09 16:04:32 CGoldminenodeSync::ProcessTick -- nTick 507721 nMnCount 2111
+2017-09-09 16:04:33 socket closed
+2017-09-09 16:04:33 disconnecting peer=97839
+2017-09-09 16:04:33 ThreadSocketHandler -- removing node: peer=97839 addr=78.47.132.196:39294 nRefCount=1 fNetworkNode=0 fInbound=1 fGoldminenode=0
+2017-09-09 16:04:34 CGoldminenodeSync::IsBlockchainSynced -- state before check: synced, skipped 43 times
+2017-09-09 16:04:38 CGoldminenodeSync::ProcessTick -- nTick 507727 nMnCount 2111
+```
+
+## Check logs of running arcticcoin daemon (via host)
+```bash
+tail -f /media/crypto/arcticcoin/debug.log
+
+2017-09-09 16:04:29 disconnecting peer=97838
+2017-09-09 16:04:29 ThreadSocketHandler -- removing node: peer=97838 addr=195.181.240.207:46948 nRefCount=1 fNetworkNode=0 fInbound=1 fGoldminenode=0
+2017-09-09 16:04:31 CGoldminenodeMan::CheckAndRemove
+2017-09-09 16:04:31 CGoldminenodeMan::CheckAndRemove -- Goldminenodes: 2111, peers who asked us for Goldminenode list: 1, peers we asked for Goldminenode list: 0, entries in Goldminenode list we asked for: 0, goldminenode index size: 2247, nDsqCount: 12232
+2017-09-09 16:04:31 CGoldminenodePayments::CheckAndRemove -- Votes: 53382, Blocks: 5011
+2017-09-09 16:04:32 CGoldminenodeSync::ProcessTick -- nTick 507721 nMnCount 2111
+2017-09-09 16:04:33 socket closed
+2017-09-09 16:04:33 disconnecting peer=97839
+2017-09-09 16:04:33 ThreadSocketHandler -- removing node: peer=97839 addr=78.47.132.196:39294 nRefCount=1 fNetworkNode=0 fInbound=1 fGoldminenode=0
+2017-09-09 16:04:34 CGoldminenodeSync::IsBlockchainSynced -- state before check: synced, skipped 43 times
+2017-09-09 16:04:38 CGoldminenodeSync::ProcessTick -- nTick 507727 nMnCount 2111
+```
+
 # Masternode Setup
 
 I'm planning on writing up a standard masternode set up guide for all DASH forked coins as the process is *almost* identical for the different coin types (at least the ones I've tried so far).
@@ -108,18 +169,18 @@ Node Alias: mn1
 
 ### Start the Masternode
 
-* *Wallet Node*: Update `/media/crypto/arcticcoin/goldminenode.conf` to tie the wallet to the masternode.  We need to add the details saved above by adding the line to the goldminenode.conf:
+* *Wallet Node*: Update `/media/crypto/arcticcoin/goldminenode.conf` (On the cold wallet host) to tie the wallet to the masternode.  We need to add the details saved above by adding the line to the goldminenode.conf:
 ```bash
 mn1 178.223.42.211:7209 6u************************************************vp be***************************************************44 0
 ```
-* *Both Nodes*: Update `/media/crypto/arcticcoin/arcticcoin.conf` to add the masternode info, by adding the lines:
+* *Both Nodes*: Update `/media/crypto/arcticcoin/arcticcoin.conf` (On the host, or wihin the container at `/home/arcticcoin/.arcticcoin/arcciccoin.conf` to add the masternode info, by adding the lines:
 ```bash
 goldminenodenode=1
 goldminenodeprivkey=6u************************************************vp
 goldminenodeaddr=178.223.42.211:7209
 ```
-* Restart Cold Wallet
-* Restart Master node
+* Restart Cold Wallet (On the Cold wallet host, `docker-compose down && docker-compose up -d` in the arcticcoind-docker directory)
+* Restart Master node (On the Masternode host, `docker-compose down && docker-compose up -d` in the arcticcoind-docker directory)
 * *Wallet Node*: Check masternode status
 ```bash
 # arcticcoin-cli -conf=/home/arcticcoin/.arcticcoin/arcticcoin.conf goldminenode list-conf
