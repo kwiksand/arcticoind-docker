@@ -110,7 +110,7 @@ Node Alias: mn1
 
 * *Wallet Node*: Update `/media/crypto/arcticcoin/goldminenode.conf` to tie the wallet to the masternode.  We need to add the details saved above by adding the line to the goldminenode.conf:
 ```bash
-mn1 178.223.42.211:7209 6u************************************************vp  93HaYBVUCYjEMeeH1Y4sBGLALQZE1Yc1K64xiqgX37tGBDQL8Xg be***************************************************44 0
+mn1 178.223.42.211:7209 6u************************************************vp be***************************************************44 0
 ```
 * *Both Nodes*: Update `/media/crypto/arcticcoin/arcticcoin.conf` to add the masternode info, by adding the lines:
 ```bash
