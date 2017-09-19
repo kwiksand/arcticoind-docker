@@ -1,28 +1,38 @@
-#!/bin/sh
+#!/bin/bash
+
 set -e
 ARCTICCOIN_DATA=/home/arcticcoin/.arcticcoin
-cd /home/arcticcoin/arcticcoind
+CONFIG_FILE=arcticcoin.conf
 
-if [ $(echo "$1" | cut -c1) = "-" ]; then
-  echo "$0: assuming arguments for arcticcoind"
+if [ -z $1 ] || [ "$1" == "arcticcoind" ] || [ $(echo "$1" | cut -c1) == "-" ]; then
+  cmd=arcticcoind
+  shift
 
-  set -- arcticcoind "$@"
-fi
+  if [ ! -d $ARCTICCOIN_DATA ]; then
+    echo "$0: DATA DIR ($ARCTICCOIN_DATA) not found, please create and add config.  exiting...."
+    exit 1
+  fi
 
-if [ $(echo "$1" | cut -c1) = "-" ] || [ "$1" = "arcticcoind" ]; then
-  mkdir -p "$ARCTICCOIN_DATA"
+  if [ ! -f $ARCTICCOIN_DATA/$CONFIG_FILE ]; then
+    echo "$0: arcticcoind config ($ARCTICCOIN_DATA/$CONFIG_FILE) not found, please create.  exiting...."
+    exit 1
+  fi
+
   chmod 700 "$ARCTICCOIN_DATA"
   chown -R arcticcoin "$ARCTICCOIN_DATA"
 
-  echo "$0: setting data directory to $ARCTICCOIN_DATA"
+  if [ -z $1 ] || [ $(echo "$1" | cut -c1) == "-" ]; then
+    echo "$0: assuming arguments for arcticcoind"
 
-  set -- "$@" -datadir="$ARCTICCOIN_DATA"
-fi
+    set -- $cmd "$@" -datadir="$ARCTICCOIN_DATA"
+  else
+    set -- $cmd -datadir="$ARCTICCOIN_DATA"
+  fi
 
-if [ "$1" = "arcticcoind" ] || [ "$1" = "arcticcoin-cli" ] || [ "$1" = "arcticcoin-tx" ]; then
-  echo
   exec gosu arcticcoin "$@"
-fi
+elif [ "$1" == "arcticcoin-cli" ] || [ "$1" == "arcticcoin-tx" ]; then
 
-echo
-exec "$@"
+  exec gosu arcticcoin "$@"
+else
+  echo "This entrypoint will only execute arcticcoind, arcticcoin-cli and arcticcoin-tx"
+fi
